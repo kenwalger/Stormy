@@ -52,6 +52,7 @@ public class MainActivity extends ActionBarActivity {
         
         mProgressBar.setVisibility(View.INVISIBLE);
 
+        //hard coded values give results for Alcatraz Island, CA
         final double latitude = 37.8267;
         final double longitude = -122.423;
 
