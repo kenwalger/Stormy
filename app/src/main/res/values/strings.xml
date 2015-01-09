@@ -17,6 +17,10 @@
     
     <string name="log_exception_caught_error">"Exception caught: "</string>
     <string name="log_main_ui_is_running">Main UI code is running!</string>
+    <string name="log_network_notification_title">Network</string>
+    <string name="log_network_notificiaton_text">Network</string>
+    <string name="log_GPS_enabled_title">GPS Enabled</string>
+    <string name="log_GPS_enabled_value">GPS Enabled</string>
 
-    
+
 </resources>

@@ -15,6 +15,17 @@ public class CurrentWeather {
     private double mPrecipChance;
     private String mSummary;
     private String mTimeZone;
+//    private String mLocation;
+//
+//    public String getLocation() {
+//        return mLocation;
+//    }
+//
+//    public void setLocation(String location) {
+//        mLocation = location;
+//    }
+
+    
 
     public String getTimeZone() {
         return mTimeZone;

@@ -42,6 +42,7 @@ public class MainActivity extends ActionBarActivity {
     @InjectView(R.id.iconImageView) ImageView mIconImageView;
     @InjectView(R.id.refreshImageView) ImageView mRefreshImageView;
     @InjectView(R.id.progressBar) ProgressBar mProgressBar;
+    //@InjectView(R.id.locationLabel) TextView mLocationLabel;
 
 
     @Override
@@ -52,9 +53,16 @@ public class MainActivity extends ActionBarActivity {
         
         mProgressBar.setVisibility(View.INVISIBLE);
 
-        //hard coded values give results for Alcatraz Island, CA
-        final double latitude = 37.8267;
-        final double longitude = -122.423;
+//        hard coded values give results for Alcatraz Island, CA
+//            final double latitude = 37.8267;
+//            final double longitude = -122.423;
+        
+        // Initiate GPS functionality
+        
+        GPSTracker gps = new GPSTracker(MainActivity.this);
+        
+        final double latitude = gps.getLatitude();
+        final double longitude = gps.getLongitude();
 
         mRefreshImageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -147,6 +155,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private void updateDisplay() {
+        //mLocationLabel.setText(mCurrentWeather.getLocation());
         mTemperatureLabel.setText(mCurrentWeather.getTemperature() + "");
         mTimeLabel.setText("At " + mCurrentWeather.getFormattedTime() + " it will be");
         mHumidityValue.setText(mCurrentWeather.getHumidity() + "");
@@ -165,6 +174,7 @@ public class MainActivity extends ActionBarActivity {
         JSONObject currently = forecast.getJSONObject("currently");
 
         CurrentWeather currentWeather = new CurrentWeather();
+        //currentWeather.setLocation(currently.getString("timezone"));
         currentWeather.setHumidity(currently.getDouble("humidity"));
         currentWeather.setTime(currently.getLong("time"));
         currentWeather.setIcon(currently.getString("icon"));
