@@ -31,8 +31,8 @@ public class GPSTracker extends Service implements LocationListener {
     boolean canGetLocation = false;
 
     Location location; // location
-    double latitude; // latitude
-    double longitude; // longitude
+    double gpsLatitude; // gpsLatitude
+    double gpsLongitude; // gpsLongitude
 
     // The minimum distance to change Updates in meters
     private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10; // 10 meters
@@ -76,8 +76,11 @@ public class GPSTracker extends Service implements LocationListener {
                         location = locationManager
                                 .getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
                         if (location != null) {
-                            latitude = location.getLatitude();
-                            longitude = location.getLongitude();
+                            gpsLatitude = location.getLatitude();
+                            gpsLongitude = location.getLongitude();
+                            Log.d("Network Latitude from GPSTracker Class: ", gpsLatitude + "");
+                            Log.d("Network Longitude from GPSTracker Class: ", gpsLongitude + "");
+                            
                         }
                     }
                 }
@@ -93,8 +96,10 @@ public class GPSTracker extends Service implements LocationListener {
                             location = locationManager
                                     .getLastKnownLocation(LocationManager.GPS_PROVIDER);
                             if (location != null) {
-                                latitude = location.getLatitude();
-                                longitude = location.getLongitude();
+                                gpsLatitude = location.getLatitude();
+                                gpsLongitude = location.getLongitude();
+                                Log.d("GPS Latitude from GPSTracker Class: ", gpsLatitude + "");
+                                Log.d("GPS Longitude from GPSTracker Class: ", gpsLongitude + "");
                             }
                         }
                     }
@@ -119,27 +124,27 @@ public class GPSTracker extends Service implements LocationListener {
     }
 
     /**
-     * Function to get latitude
+     * Function to get gpsLatitude
      * */
-    public double getLatitude(){
+    public double getGpsLatitude(){
         if(location != null){
-            latitude = location.getLatitude();
+            gpsLatitude = location.getLatitude();
         }
 
-        // return latitude
-        return latitude;
+        // return gpsLatitude
+        return gpsLatitude;
     }
 
     /**
-     * Function to get longitude
+     * Function to get gpsLongitude
      * */
-    public double getLongitude(){
+    public double getGpsLongitude(){
         if(location != null){
-            longitude = location.getLongitude();
+            gpsLongitude = location.getLongitude();
         }
 
-        // return longitude
-        return longitude;
+        // return gpsLongitude
+        return gpsLongitude;
     }
 
     /**
@@ -152,7 +157,7 @@ public class GPSTracker extends Service implements LocationListener {
 
     /**
      * Function to show settings alert dialog
-     * On pressing Settings button will lauch Settings Options
+     * On pressing Settings button will launch Settings Options
      * */
     public void showSettingsAlert(){
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);

@@ -54,15 +54,26 @@ public class MainActivity extends ActionBarActivity {
         mProgressBar.setVisibility(View.INVISIBLE);
 
 //        hard coded values give results for Alcatraz Island, CA
-//            final double latitude = 37.8267;
-//            final double longitude = -122.423;
-        
-        // Initiate GPS functionality
-        
+//            final double latitude = 44.9308;
+//            final double longitude = -123.0289;
+        // Keizer, OR  Lat: 44.9308, Long: 123.0289
+        // GPSTracker Method of getting Lat/Long data
+
         GPSTracker gps = new GPSTracker(MainActivity.this);
-        
-        final double latitude = gps.getLatitude();
-        final double longitude = gps.getLongitude();
+        // TODO: add network check to variable assignment
+        // TODO: convert Lat/Long data to closest city name
+//        if(gps.canGetLocation()) {
+            final double latitude = gps.getGpsLatitude();
+            final double longitude = gps.getGpsLongitude();
+
+            Log.i(TAG, "GPS Latitude: " + latitude);
+            Log.i(TAG, "GPS Longitude: " + longitude);
+
+            Toast.makeText(getApplicationContext(), "Your Location is - \nLat: "
+                    + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
+//        } else {
+//            gps.showSettingsAlert();
+//        }
 
         mRefreshImageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,6 +82,7 @@ public class MainActivity extends ActionBarActivity {
             }
         });
 
+                
         getForecast(latitude, longitude);
 
         Log.d(TAG, getString(R.string.log_main_ui_is_running));
@@ -155,7 +167,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private void updateDisplay() {
-        //mLocationLabel.setText(mCurrentWeather.getLocation());
+        //mLocationLabel.setText(mCurrentWeather.getCity());
         mTemperatureLabel.setText(mCurrentWeather.getTemperature() + "");
         mTimeLabel.setText("At " + mCurrentWeather.getFormattedTime() + " it will be");
         mHumidityValue.setText(mCurrentWeather.getHumidity() + "");
@@ -170,11 +182,10 @@ public class MainActivity extends ActionBarActivity {
         JSONObject forecast = new JSONObject(jsonData);
         String timezone = forecast.getString("timezone");
         Log.i(TAG, getString(R.string.debug_from_JSON) + timezone);
-
+        
         JSONObject currently = forecast.getJSONObject("currently");
 
         CurrentWeather currentWeather = new CurrentWeather();
-        //currentWeather.setLocation(currently.getString("timezone"));
         currentWeather.setHumidity(currently.getDouble("humidity"));
         currentWeather.setTime(currently.getLong("time"));
         currentWeather.setIcon(currently.getString("icon"));
@@ -196,7 +207,6 @@ public class MainActivity extends ActionBarActivity {
 
         if(networkInfo != null && networkInfo.isConnected()) {
             isAvailable = true;
-
         }
 
         return isAvailable;
